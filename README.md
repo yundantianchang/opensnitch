@@ -80,7 +80,9 @@ default contents of this file are:
 {
 	"default_timeout": 15,
 	"default_action": "allow",
-	"default_duration": "until restart"
+	"default_duration": "until restart",
+	"default_pingtime": 1,
+	"default_pingtimeout": 3
 }
 ```
 

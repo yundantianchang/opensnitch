@@ -32,13 +32,15 @@ type Client struct {
 	isUnixSocket bool
 	con          *grpc.ClientConn
 	client       protocol.UIClient
+	pingTime     int
 }
 
-func NewClient(path string, stats *statistics.Statistics) *Client {
+func NewClient(path string, pingTime int, stats *statistics.Statistics) *Client {
 	c := &Client{
 		socketPath:   path,
 		stats:        stats,
 		isUnixSocket: false,
+		pingTime:     pingTime,
 	}
 	if strings.HasPrefix(c.socketPath, "unix://") == true {
 		c.isUnixSocket = true
@@ -78,7 +80,7 @@ func (c *Client) poller() {
 			}
 		}
 
-		time.Sleep(1 * time.Second)
+		time.Sleep(time.Duration(c.pingTime) * time.Second)
 	}
 }
 

@@ -30,6 +30,7 @@ var (
 	queueNum     = 0
 	workers      = 16
 	debug        = false
+	pingTime     = 1
 
 	uiSocket = "unix:///tmp/osui.sock"
 	uiClient = (*ui.Client)(nil)
@@ -51,6 +52,7 @@ func init() {
 	flag.StringVar(&rulesPath, "rules-path", rulesPath, "Path to load JSON rules from.")
 	flag.IntVar(&queueNum, "queue-num", queueNum, "Netfilter queue number.")
 	flag.IntVar(&workers, "workers", workers, "Number of concurrent workers.")
+	flag.IntVar(&pingTime, "ping-time", pingTime, "Ping time interval.")
 	flag.BoolVar(&noLiveReload, "no-live-reload", debug, "Disable rules live reloading.")
 
 	flag.StringVar(&logFile, "log-file", logFile, "Write logs to this file instead of the standard output.")
@@ -264,7 +266,7 @@ func main() {
 		log.Fatal("Error while running drop firewall rule: %s", err)
 	}
 
-	uiClient = ui.NewClient(uiSocket, stats)
+	uiClient = ui.NewClient(uiSocket, pingTime, stats)
 
 	log.Info("Running on netfilter queue #%d ...", queueNum)
 	for true {

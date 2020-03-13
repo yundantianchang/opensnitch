@@ -146,7 +146,7 @@ class UIService(ui_pb2_grpc.UIServicer, QtWidgets.QGraphicsObject):
         self._status_change_trigger.emit()
 
         while True:
-            time.sleep(1)
+            time.sleep(self._cfg.default_pingtime)
 
             # we didn't see any daemon so far ...
             if self._last_ping is None:
@@ -159,7 +159,7 @@ class UIService(ui_pb2_grpc.UIServicer, QtWidgets.QGraphicsObject):
             # we expect a 3 seconds delay -at most-
             time_not_seen = datetime.now() - self._last_ping
             secs_not_seen = time_not_seen.seconds + time_not_seen.microseconds / 1E6
-            self._connected = ( secs_not_seen < 3 )
+            self._connected = ( secs_not_seen < self._cfg.default_pingtimeout )
             if was_connected != self._connected:
                 self._status_change_trigger.emit()
                 was_connected = self._connected
