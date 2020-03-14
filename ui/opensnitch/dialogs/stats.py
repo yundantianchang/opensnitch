@@ -46,6 +46,8 @@ class StatsDialog(QtWidgets.QDialog, uic.loadUiType(DIALOG_UI_PATH)[0]):
         self._rules_label = self.findChild(QtWidgets.QLabel, "rulesLabel")
         self._cons_label = self.findChild(QtWidgets.QLabel, "consLabel")
         self._dropped_label = self.findChild(QtWidgets.QLabel, "droppedLabel")
+        self._update_checkBox = self.findChild(QtWidgets.QCheckBox, "updatecheckBox")
+        self._update_checkBox.setCheckState(False)
 
         self._events_table = self._setup_table("eventsTable", ("Time", "Action", "Process", "Destination", "Protocol", "Rule" ))
         self._addrs_table = self._setup_table("addrTable", ("IP", "Connections"))
@@ -146,6 +148,9 @@ class StatsDialog(QtWidgets.QDialog, uic.loadUiType(DIALOG_UI_PATH)[0]):
 
 
     def _render_events_table(self):
+        if not self._update_checkBox.isChecked():
+            return
+
         self._events_table.setRowCount(len(self._stats.events))
 
         for row, event in enumerate(reversed(self._stats.events)):
@@ -178,6 +183,8 @@ class StatsDialog(QtWidgets.QDialog, uic.loadUiType(DIALOG_UI_PATH)[0]):
             item = QtWidgets.QTableWidgetItem( event.rule.name )
             item.setFlags( QtCore.Qt.ItemIsSelectable |  QtCore.Qt.ItemIsEnabled )
             self._events_table.setItem(row, 5, item)
+
+        self._update_checkBox.setCheckState(False)
 
     @QtCore.pyqtSlot()
     def _on_update_triggered(self):

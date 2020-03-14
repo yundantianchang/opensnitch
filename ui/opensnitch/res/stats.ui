@@ -61,7 +61,7 @@
        <x>10</x>
        <y>10</y>
        <width>351</width>
-       <height>51</height>
+       <height>63</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
@@ -257,7 +257,7 @@
        <x>570</x>
        <y>10</y>
        <width>191</width>
-       <height>51</height>
+       <height>63</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
@@ -395,6 +395,22 @@
      </attribute>
      <column/>
      <column/>
+    </widget>
+    <widget class="QCheckBox" name="updatecheckBox">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>10</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Update Once</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_4">
@@ -589,7 +605,8 @@
     <string>...</string>
    </property>
    <property name="icon">
-    <iconset theme="document-save-as"/>
+    <iconset theme="document-save-as">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
