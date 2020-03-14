@@ -22,6 +22,7 @@ class Config:
         self.default_duration = "until restart"
         self.default_pingtime = 1
         self.default_pingtimeout = 3
+        self.default_stats_ontop = True
 
         if self.exists:
             # print( "Loading configuration from %s ..." % self.filename )
@@ -32,6 +33,7 @@ class Config:
             self.default_duration = data["default_duration"]
             self.default_pingtime = data["default_pingtime"]
             self.default_pingtimeout = data["default_pingtimeout"]
+            self.default_stats_ontop = data["default_stats_ontop"]
             if self.default_pingtime < 1:
                 self.default_pingtime = 1
             if self.default_pingtimeout < 3 * self.default_pingtime:
@@ -49,6 +51,7 @@ class Config:
                 'default_duration': self.default_duration,
                 'default_pingtime': self.default_pingtime,
                 'default_pingtimeout': self.default_pingtimeout,
+                'default_stats_ontop': self.default_stats_ontop,
             }
             json.dump(data, fp)
             self.exists = True

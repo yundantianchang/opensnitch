@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, uic, QtWidgets
 
 import ui_pb2
 from version import version
+from config import Config
 
 DIALOG_UI_PATH = "%s/../res/stats.ui" % os.path.dirname(sys.modules[__name__].__file__)
 class StatsDialog(QtWidgets.QDialog, uic.loadUiType(DIALOG_UI_PATH)[0]):
@@ -20,7 +21,11 @@ class StatsDialog(QtWidgets.QDialog, uic.loadUiType(DIALOG_UI_PATH)[0]):
     _trigger = QtCore.pyqtSignal()
 
     def __init__(self, parent=None, address=None):
-        QtWidgets.QDialog.__init__(self, parent, QtCore.Qt.WindowStaysOnTopHint)
+        self._cfg = Config.get()
+        if self._cfg.default_stats_ontop:
+            QtWidgets.QDialog.__init__(self, parent,QtCore.Qt.WindowStaysOnTopHint)
+        else:
+            QtWidgets.QDialog.__init__(self, parent)
 
         self.setupUi(self)
 

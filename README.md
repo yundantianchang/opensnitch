@@ -82,7 +82,8 @@ default contents of this file are:
 	"default_action": "allow",
 	"default_duration": "until restart",
 	"default_pingtime": 1,
-	"default_pingtimeout": 3
+	"default_pingtimeout": 3,
+	"default_stats_ontop": false
 }
 ```
 
