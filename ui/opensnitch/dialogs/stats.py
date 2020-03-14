@@ -135,7 +135,13 @@ class StatsDialog(QtWidgets.QDialog, uic.loadUiType(DIALOG_UI_PATH)[0]):
     def _render_counters_table(self, table, data):
         table.setRowCount(len(data))
         table.setColumnCount(2)
-        for row, t in enumerate(sorted(data.items(), key=operator.itemgetter(1), reverse=True)):
+
+        if table.currentColumn() in [-1,1]:
+            slist=sorted(data.items(), key=operator.itemgetter(1), reverse=True)
+        else:
+            slist=sorted(data.items(), key=operator.itemgetter(0), reverse=False)
+
+        for row, t in enumerate(slist):
             what, hits = t
 
             item = QtWidgets.QTableWidgetItem(what)
@@ -185,6 +191,11 @@ class StatsDialog(QtWidgets.QDialog, uic.loadUiType(DIALOG_UI_PATH)[0]):
             self._events_table.setItem(row, 5, item)
 
         self._update_checkBox.setCheckState(False)
+
+        # sort table
+        currentColumn=self._events_table.currentColumn()
+        if not currentColumn in [-1,0]:
+            self._events_table.sortItems(currentColumn)
 
     @QtCore.pyqtSlot()
     def _on_update_triggered(self):
